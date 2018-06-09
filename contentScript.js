@@ -1,5 +1,5 @@
 var clickedEl = null;
-var personData = null; //{"Pid":"","FirstName":"","MiddleName":"","LastName":"","FullName":"","Gender":"","IsDead":""};
+var personData = null;
 
 chrome.extension.onMessage.addListener(function (message, sender, callback) {
     if (message.Paste == "person") {
