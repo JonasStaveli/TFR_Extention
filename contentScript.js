@@ -1,6 +1,6 @@
 var clickedEl = null;
-var personData = null;//{"Pid":"","FirstName":"","MiddleName":"","LastName":"","FullName":"","Gender":"","IsDead":""};
-// ^ change to if test?
+var personData = null; //{"Pid":"","FirstName":"","MiddleName":"","LastName":"","FullName":"","Gender":"","IsDead":""};
+
 chrome.extension.onMessage.addListener(function (message, sender, callback) {
     if (message.Paste == "person") {
         chrome.storage.sync.get('person', function(result) {
