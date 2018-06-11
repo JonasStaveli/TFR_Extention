@@ -35,10 +35,10 @@ chrome.storage.onChanged.addListener(function(changes, areaName){
     chrome.contextMenus.removeAll();
     var parent = chrome.contextMenus.create({"title": "Lim inn...","contexts":["editable"]})
    chrome.contextMenus.create({"title": "Test person","onclick": setPerson,"contexts":["editable"],"parentId": parent});
-   chrome.contextMenus.create({"title": "Test mann","onclick": setPerson,"contexts":["editable"],"parentId": parent});
-   chrome.contextMenus.create({"title": "Test kvinne","onclick": setPerson,"contexts":["editable"],"parentId": parent});
-   chrome.contextMenus.create({"title": "Død testperson","onclick": setPerson,"contexts":["editable"],"parentId": parent});
-   chrome.contextMenus.create({"title": "Levende testperson","onclick": setPerson,"contexts":["editable"],"parentId": parent});
+   chrome.contextMenus.create({"title": "Test mann","onclick": setMale,"contexts":["editable"],"parentId": parent});
+   chrome.contextMenus.create({"title": "Test kvinne","onclick": setFemale,"contexts":["editable"],"parentId": parent});
+   chrome.contextMenus.create({"title": "Død testperson","onclick": setDead,"contexts":["editable"],"parentId": parent});
+   chrome.contextMenus.create({"title": "Levende testperson","onclick": setAlive,"contexts":["editable"],"parentId": parent});
   }else{
     chrome.contextMenus.removeAll();
     chrome.contextMenus.create({"title": "Lim inn test personnummer","onclick": setPerson,"contexts":["editable"]});
@@ -63,11 +63,11 @@ chrome.runtime.onInstalled.addListener(function() {
             chrome.storage.sync.set({'female': data[0]});
   });
 
-  fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=true").then((resp) => resp.json()).then(function(data){
+  fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=True").then((resp) => resp.json()).then(function(data){
       chrome.storage.sync.set({'dead': data[0]});
   });
 
-  fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=false").then((resp) => resp.json()).then(function(data){
+  fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=False").then((resp) => resp.json()).then(function(data){
       chrome.storage.sync.set({'alive': data[0]});
   });
 
