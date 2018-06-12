@@ -1,6 +1,6 @@
 {
   "name": "Test Folkeregister",
-  "description": "Extension versjon av testfolkeregister. Icon by IconfactoryTeam from the Noun Project, orginal work has been modified",
+  "description": "Extension versjon av testfolkeregister.",
   "version": "1.1",
   "permissions": ["declarativeContent","contextMenus","activeTab","<all_urls>","tabs","storage"],
   "background": {
