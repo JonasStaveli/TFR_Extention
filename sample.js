@@ -45,7 +45,10 @@ chrome.storage.onChanged.addListener(function(changes, areaName){
   }
 });
 
-
+chrome.runtime.onStartup.addListener(function(){
+  chrome.contextMenus.removeAll();
+  chrome.contextMenus.create({"title": "Lim inn test personnummer","onclick": setPerson,"contexts":["editable"]});
+});
 
 
 chrome.runtime.onInstalled.addListener(function() { 
