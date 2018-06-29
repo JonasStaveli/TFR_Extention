@@ -1,5 +1,5 @@
 var more = false;
-function setPerson(info, tab){mainSend("person")}
+function setPerson(info, tab){mainSend("person");}
 function setMale(info, tab){mainSend("male")}
 function setFemale(info, tab){mainSend("female")}
 function setDead(info, tab){mainSend("dead")}
@@ -14,14 +14,16 @@ function mainSend(call) {
   chrome.tabs.sendMessage(tabs[0].id, {
        "Paste": call
   });
+  
  });
-
 }
 
 function mycallback(info, tab) {
   chrome.tabs.sendMessage(tab.id, "getClickedEl", function(clickedEl) {
     elt.value = clickedEl.value;
+    
   });
+  
 }
 
 chrome.storage.onChanged.addListener(function(changes, areaName){

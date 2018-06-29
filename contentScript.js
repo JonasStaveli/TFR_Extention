@@ -43,11 +43,22 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             chrome.storage.sync.set({'alive': data[0]});
         });
     }
+    
 
     
     setTimeout(function(){
         if(personData != null){
             console.log("Pid: "+personData.Pid+" FirstName: "+personData.FirstName+" MiddleName: "+personData.MiddleName+" LastName: "+personData.LastName+" FullName: "+personData.FullName+" Gender: "+personData.Gender+" IsDead: "+personData.IsDead);
+            // if(true){
+            //     var keyboardEvent = new KeyboardEvent('keypress', {
+            //         bubbles:true,
+            //         key:"Enter",
+            //         code:"Enter"
+                
+            //     }); 
+            //     document.body.dispatchEvent(keyboardEvent);
+            //     console.log(keyboardEvent);
+            // }
         }    
     }, 100);
 
@@ -57,6 +68,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
 document.addEventListener("mousedown", function(event){
     if(event.button == 2) { 
         clickedEl = event.target;
+
     }
 }, true);
 
