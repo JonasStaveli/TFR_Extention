@@ -55,6 +55,7 @@ chrome.runtime.onStartup.addListener(function(){
 
 chrome.runtime.onInstalled.addListener(function() { 
   chrome.storage.sync.set({'toggle': "red"});
+  chrome.storage.sync.set({'enter': "red"});
 
   fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson").then((resp) => resp.json()).then(function(data){
     chrome.storage.sync.set({'person': data[0]});

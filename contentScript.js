@@ -1,5 +1,6 @@
 var clickedEl = null;
 var personData = null;
+var enter = null;
 
 chrome.extension.onMessage.addListener(function (message, sender, callback) {
     if (message.Paste == "person") {
@@ -43,22 +44,24 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             chrome.storage.sync.set({'alive': data[0]});
         });
     }
-    
+    chrome.storage.sync.get('enter', function(result) {
+        enter = result.enter;
+        
+      });
 
     
     setTimeout(function(){
         if(personData != null){
             console.log("Pid: "+personData.Pid+" FirstName: "+personData.FirstName+" MiddleName: "+personData.MiddleName+" LastName: "+personData.LastName+" FullName: "+personData.FullName+" Gender: "+personData.Gender+" IsDead: "+personData.IsDead);
-            // if(true){
-            //     var keyboardEvent = new KeyboardEvent('keypress', {
-            //         bubbles:true,
-            //         key:"Enter",
-            //         code:"Enter"
-                
-            //     }); 
-            //     document.body.dispatchEvent(keyboardEvent);
-            //     console.log(keyboardEvent);
-            // }
+            if(enter == "green"){
+                var keyboardEventDown = new KeyboardEvent('keydown', {bubbles:true, key:"Enter", code:"Enter"});
+                var keyboardEventPress = new KeyboardEvent('keypress', {bubbles:true, key:"Enter", code:"Enter"}); 
+                var keyboardEventUp = new KeyboardEvent('keyup', {bubbles:true, key:"Enter", code:"Enter"}); 
+                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventDown);
+                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventPress);
+                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventUp);
+               // console.log(keyboardEvent);
+            }
         }    
     }, 100);
 
