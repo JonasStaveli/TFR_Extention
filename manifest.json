@@ -2,8 +2,8 @@
   "name": "Test Folkeregister",
   "short_name": "TFR",
   "description": "Extension versjon av testfolkeregister.",
-  "version": "1.2.0",
-  "permissions": ["declarativeContent","contextMenus","activeTab","<all_urls>","tabs","storage"],
+  "version": "1.2.2",
+  "permissions": ["declarativeContent","contextMenus","activeTab","<all_urls>","tabs","storage","input","debugger"],
   "background": {
     "scripts": ["sample.js"]
   },

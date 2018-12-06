@@ -9,10 +9,30 @@
 
       }
     </style>
+    <link href="bootstrap2-toggle.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    
   </head>
   <body>
-      More options: <button id="toggleOptions" ></button>
-      Auto Enter: <button id="toggleEnter" ></button>
+      <!--More options: <button id="toggleOptionsOLD" ></button>-->
+      <div class="checkbox">
+        <label>
+            More options: 
+          <input type="checkbox" id="toggleOptions" data-toggle="toggle" checked="false">
+          
+        </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              Auto Enter:
+            <input type="checkbox" id="toggleEnter" data-toggle="toggle" checked="false">
+            
+          </label>
+        </div>
+     <!-- Auto Enter: <button id="toggleEnter" ></button>-->
       <script src="popup.js"></script>
+      <script src="jquery-3.3.1.min.js"></script>
+      <script src="bootstrap.min.js"></script>
+      <script src="bootstrap2-toggle.min.js"></script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 var clickedEl = null;
 var personData = null;
 var enter = null;
+var api = "https://mrsutilities.azurewebsites.net/api/GetTestPerson";
 
 chrome.extension.onMessage.addListener(function (message, sender, callback) {
     if (message.Paste == "person") {
@@ -8,7 +9,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             personData = result.person;
             clickedEl.value = personData.Pid;
         });
-        fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson").then((resp) => resp.json()).then(function(data){
+        fetch(api).then((resp) => resp.json()).then(function(data){
             chrome.storage.sync.set({'person': data[0]});
         });
     }else if(message.Paste == "male"){
@@ -16,7 +17,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             personData = result.male;
             clickedEl.value = personData.Pid;
         });
-        fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?Gender=M").then((resp) => resp.json()).then(function(data){
+        fetch(api+"?Gender=M").then((resp) => resp.json()).then(function(data){
             chrome.storage.sync.set({'male': data[0]});
         });
     }else if(message.Paste == "female"){
@@ -24,7 +25,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             personData = result.female;
             clickedEl.value = personData.Pid;
         });
-        fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?Gender=K").then((resp) => resp.json()).then(function(data){
+        fetch(api+"?Gender=K").then((resp) => resp.json()).then(function(data){
             chrome.storage.sync.set({'female': data[0]});
         });
     }else if(message.Paste == "dead"){
@@ -32,7 +33,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             personData = result.dead;
             clickedEl.value = personData.Pid;
         });
-        fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=true").then((resp) => resp.json()).then(function(data){
+        fetch(api+"?IsDead=true").then((resp) => resp.json()).then(function(data){
             chrome.storage.sync.set({'dead': data[0]});
         });
     }else if(message.Paste == "alive"){
@@ -40,27 +41,22 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
             personData = result.alive;
             clickedEl.value = personData.Pid;
         });
-        fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson?IsDead=false").then((resp) => resp.json()).then(function(data){
+        fetch(api+"?IsDead=false").then((resp) => resp.json()).then(function(data){
             chrome.storage.sync.set({'alive': data[0]});
         });
     }
     chrome.storage.sync.get('enter', function(result) {
         enter = result.enter;
-        
-      });
+    });
 
     
     setTimeout(function(){
         if(personData != null){
             console.log("Pid: "+personData.Pid+" FirstName: "+personData.FirstName+" MiddleName: "+personData.MiddleName+" LastName: "+personData.LastName+" FullName: "+personData.FullName+" Gender: "+personData.Gender+" IsDead: "+personData.IsDead);
             if(enter == "green"){
-                var keyboardEventDown = new KeyboardEvent('keydown', {bubbles:true, key:"Enter", code:"Enter"});
-                var keyboardEventPress = new KeyboardEvent('keypress', {bubbles:true, key:"Enter", code:"Enter"}); 
-                var keyboardEventUp = new KeyboardEvent('keyup', {bubbles:true, key:"Enter", code:"Enter"}); 
-                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventDown);
-                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventPress);
-                document.getElementById(clickedEl.id).dispatchEvent(keyboardEventUp);
-               // console.log(keyboardEvent);
+                if(clickedEl.id == "SearchParameter"){
+                    document.getElementById("patientSearchBtn").click();
+                }
             }
         }    
     }, 100);
@@ -80,4 +76,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request == "getClickedEl") {
         sendResponse({value: clickedEl.value});
     }
-});
+}
+
+);
+

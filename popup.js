@@ -1,32 +1,44 @@
 var toggleOptions = document.getElementById('toggleOptions');
-var init = true;
+var toggleEnter = document.getElementById('toggleEnter');
+
 var flip;
 var flipE;
 
-chrome.storage.sync.get('toggle', function(result) {
-    flip = result.toggle;
-    toggleOptions.style = "background-color: "+flip;
+chrome.storage.sync.get('AdvancedContextMenu', function(result) {
+    $('#toggleOptions').prop('checked', false).change()
+    flip=false;
   });
+
   chrome.storage.sync.get('enter', function(result) {
-    flipE = result.enter;
-    toggleEnter.style = "background-color: "+ flipE;
+    if(result.enter == "red"){
+        flipE = result.enter;
+        //toggleEnter.style = "background-color: "+ flipE;
+        toggleEnter.checked = false;
+    }else{
+        flipE = result.enter;
+        //toggleEnter.style = "background-color: "+ flipE;
+        toggleEnter.checked = true;
+    }
+
+    
+  
   });
 
 
-toggleOptions.onclick = function(element){
+toggleOptions.onchange = function(element){
     
-    if(flip == "green"){
-        
-        chrome.storage.sync.set({'toggle': "red"});
-        console.log("single");
-        toggleOptions.style = "background-color: red";
-        flip="red";
+    if(flip == true){
+        console.log("togleOptions: true");
+        chrome.storage.sync.set({'AdvancedContextMenu': "false"});
+        //$('#toggleOptions').prop('checked', false).change()
+        //toggleOptions.style = "background-color: red";
+        flip=false;
     }else{
         
-        chrome.storage.sync.set({'toggle': "green"});
-        console.log("multi");
-        toggleOptions.style = "background-color: green";
-        flip="green";
+        chrome.storage.sync.set({'AdvancedContextMenu': "true"});
+        //$('#toggleOptions').prop('checked', true).change()
+        //toggleOptions.style = "background-color: green";
+        flip=true;
     }
     
 };
