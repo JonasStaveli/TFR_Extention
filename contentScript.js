@@ -53,7 +53,7 @@ chrome.extension.onMessage.addListener(function (message, sender, callback) {
     setTimeout(function(){
         if(personData != null){
             console.log("Pid: "+personData.Pid+" FirstName: "+personData.FirstName+" MiddleName: "+personData.MiddleName+" LastName: "+personData.LastName+" FullName: "+personData.FullName+" Gender: "+personData.Gender+" IsDead: "+personData.IsDead);
-            if(enter == "green"){
+            if(enter == true){
                 if(clickedEl.id == "SearchParameter"){
                     document.getElementById("patientSearchBtn").click();
                 }

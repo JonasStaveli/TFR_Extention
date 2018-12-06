@@ -1,5 +1,6 @@
 var more = null;
 var enter = null;
+
 function setPerson(info, tab){mainSend("person");}
 function setMale(info, tab){mainSend("male")}
 function setFemale(info, tab){mainSend("female")}
@@ -17,13 +18,20 @@ function mainSend(call) {
   });
 
 
-  if(enter == "green"){
+  if(enter == true){
     console.log(tabs);
+
     chrome.tabs.query({active: true}, function(tabs) {
+      
         chrome.debugger.attach({ tabId: tabs[0].id }, "1.0");
-        chrome.debugger.sendCommand({ tabId: tabs[0].id }, 'Input.dispatchKeyEvent', { type: 'keyUp', windowsVirtualKeyCode:13, nativeVirtualKeyCode : 13, macCharCode: 13  });
-        chrome.debugger.sendCommand({ tabId: tabs[0].id }, 'Input.dispatchKeyEvent', { type: 'keyDown', windowsVirtualKeyCode:13, nativeVirtualKeyCode : 13, macCharCode: 13  });
-        chrome.debugger.detach({ tabId: tabs[0].id });
+ 
+        chrome.debugger.sendCommand({ tabId: tabs[0].id }, 'Input.dispatchKeyEvent', 
+          { type: 'keyUp', windowsVirtualKeyCode:13, nativeVirtualKeyCode : 13, macCharCode: 13  });
+        chrome.debugger.sendCommand({ tabId: tabs[0].id }, 'Input.dispatchKeyEvent', 
+          { type: 'keyDown', windowsVirtualKeyCode:13, nativeVirtualKeyCode : 13, macCharCode: 13  }, function(){chrome.debugger.detach({ tabId: tabs[0].id });});
+
+        
+        //chrome.debugger.detach({ tabId: tabs[0].id });
     });
   }
  });
@@ -41,14 +49,14 @@ chrome.storage.onChanged.addListener(function(changes){//areaname?
   
   if(changes.AdvancedContextMenu != undefined){
   more = changes.AdvancedContextMenu.newValue;
-  console.log("Change: " + changes.AdvancedContextMenu.newValue +" "+ more);
+  console.log("AdvancedContextMenu is now: " + more);
   }
   if(changes.enter != undefined){
     enter = changes.enter.newValue;
-    console.log("Change: " + changes.enter.newValue +" "+ enter);
+    console.log("Enter is now: "+ enter);
     }
- 
-  if(more == "true"){
+    console.log(more);
+  if(more == true){
     chrome.contextMenus.removeAll();
     var parent = chrome.contextMenus.create({"title": "Lim inn...","contexts":["editable"]})
     chrome.contextMenus.create({"title": "Test person","onclick": setPerson,"contexts":["editable"],"parentId": parent});
@@ -69,8 +77,9 @@ chrome.runtime.onStartup.addListener(function(){
 
 
 chrome.runtime.onInstalled.addListener(function() { 
+
   chrome.storage.sync.set({'AdvancedContextMenu': "false"});
-  chrome.storage.sync.set({'enter': "red"});
+  chrome.storage.sync.set({'enter': "false"});
 
   fetch("https://mrsutilities.azurewebsites.net/api/GetTestPerson").then((resp) => resp.json()).then(function(data){
     chrome.storage.sync.set({'person': data[0]});
@@ -94,3 +103,4 @@ chrome.runtime.onInstalled.addListener(function() {
 
 });
 
+//For later: https://developer.chrome.com/extensions/commands
